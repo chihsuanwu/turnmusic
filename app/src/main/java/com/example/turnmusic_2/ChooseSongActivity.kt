@@ -21,7 +21,12 @@ class ChooseSongActivity : AppCompatActivity() {
         loadDirectory()
 
         lv_file.setOnItemClickListener { _, _, position, _ ->
-            Log.e("DEBUG", midiFilesList[position])
+            val intent = Intent(this, SheetActivity::class.java)
+            intent.putExtra("fileName", midiFilesList[position])
+            intent.putExtra("title", midiFilesList[position])
+            startActivity(intent)
+            finish()
+//            Log.e("DEBUG", midiFilesList[position])
 //            startActivity(Intent(this@MainActivity2, ChooseSongActivity::class.java))
 //            finish()
             //FileManager.loadFile(midiFilesList[position])

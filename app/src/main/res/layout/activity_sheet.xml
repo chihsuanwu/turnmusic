@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/csl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SheetActivity">
@@ -61,5 +62,5 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/history_menu"
         tools:ignore="OnClick"
-        android:onClick="meun_paly_click"/>
+        android:onClick="menuClick"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
