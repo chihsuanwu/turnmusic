@@ -14,8 +14,9 @@ package com.midisheetmusic.sheets
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
-import com.midisheetmusic.NoteDuration
+import com.example.turnmusic_2.library.NoteDuration
 import com.example.turnmusic_2.library.SheetMusic
+import com.example.turnmusic_2.library.sheets.MusicSymbol
 
 /* @class RestSymbol
  * A Rest symbol represents a rest - whole, half, quarter, or eighth.

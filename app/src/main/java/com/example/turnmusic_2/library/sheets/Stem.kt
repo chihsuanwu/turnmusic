@@ -9,12 +9,12 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  */
-package com.midisheetmusic.sheets
+package com.example.turnmusic_2.library.sheets
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import com.midisheetmusic.NoteDuration
+import com.example.turnmusic_2.library.NoteDuration
 import com.example.turnmusic_2.library.SheetMusic
 
 /** @class Stem

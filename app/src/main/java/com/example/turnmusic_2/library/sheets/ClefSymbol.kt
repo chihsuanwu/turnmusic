@@ -15,8 +15,6 @@ import android.content.Context
 import android.graphics.*
 import com.example.turnmusic_2.R
 import com.example.turnmusic_2.library.SheetMusic
-import com.midisheetmusic.sheets.Clef
-import com.midisheetmusic.sheets.MusicSymbol
 
 /** @class ClefSymbol
  * A ClefSymbol represents either a Treble or Bass Clef image.
@@ -25,11 +23,11 @@ import com.midisheetmusic.sheets.MusicSymbol
  * small symbols are used to show clef changes within a staff.
  */
 class ClefSymbol(
-    /** True if this is a small clef, false otherwise  */
+        /** True if this is a small clef, false otherwise  */
         private val clef: Clef,
-    /** The bass clef image  */
+        /** The bass clef image  */
         override val startTime: Int,
-    /** Start time of the symbol  */
+        /** Start time of the symbol  */
         private val smallsize: Boolean) : MusicSymbol {
     /** Get the time (in pulses) this symbol occurs at.
      * This is used to determine the measure this symbol belongs to.

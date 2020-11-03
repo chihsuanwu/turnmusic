@@ -9,7 +9,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  */
-package com.midisheetmusic
+package com.example.turnmusic_2.library
 
 /**
  * Enumeration of the notes in a scale (A, A#, ... G#)

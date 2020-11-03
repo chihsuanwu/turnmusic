@@ -16,7 +16,10 @@ import com.midisheetmusic.KeySignature
 import com.example.turnmusic_2.library.MidiOptions
 import com.example.turnmusic_2.library.SheetMusic
 import com.example.turnmusic_2.library.SheetMusic.Companion.KeySignatureWidth
+import com.example.turnmusic_2.library.sheets.Clef
 import com.example.turnmusic_2.library.sheets.ClefSymbol
+import com.example.turnmusic_2.library.sheets.LyricSymbol
+import com.example.turnmusic_2.library.sheets.MusicSymbol
 import java.util.*
 
 /* @class Staff

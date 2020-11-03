@@ -15,6 +15,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import com.example.turnmusic_2.library.SheetMusic
+import com.example.turnmusic_2.library.sheets.Accidental
+import com.example.turnmusic_2.library.sheets.Clef
+import com.example.turnmusic_2.library.sheets.MusicSymbol
+import com.example.turnmusic_2.library.sheets.WhiteNote
 
 /** @class AccidentalSymbol
  * An accidental symbol represents a sharp, flat, or natural

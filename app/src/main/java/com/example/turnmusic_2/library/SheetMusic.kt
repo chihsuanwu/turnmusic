@@ -14,10 +14,11 @@ package com.example.turnmusic_2.library
 import android.app.Activity
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import com.example.turnmusic_2.library.sheets.ClefSymbol
+import com.example.turnmusic_2.library.sheets.*
 import com.midisheetmusic.*
 import com.midisheetmusic.sheets.*
 import java.nio.charset.StandardCharsets
@@ -41,7 +42,7 @@ internal class BoxedInt {
  * Shade all the notes played at a given pulse time.
  */
 class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callback,
-    ScrollAnimationListener {
+        ScrollAnimationListener {
     private var staffs: ArrayList<Staff>? = null
     /** Get the main key signature  */
     /** The array of staffs to display (from top to bottom)  */
@@ -102,22 +103,22 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
     //private val playerHeight: Int
 
     /** Height of the midi player  */
-    private val screenwidth: Int
+    private val screenWidth: Int
 
     /** The screen width  */
-    private val screenheight: Int
+    private val screenHeight: Int
 
     /** The screen height  */ /* fields used for scrolling */
-    private var sheetwidth = 0
+    private var sheetWidth = 0
 
     /** The sheet music width (excluding zoom)  */
-    private var sheetheight = 0
+    private var sheetHeight = 0
 
     /** The sheet music height (excluding zoom)  */
-    private var viewwidth = 0
+    private var viewWidth = 0
 
     /** The width of this view.  */
-    private var viewheight = 0
+    private var viewHeight = 0
 
     /** The height of this view.  */
     private var bufferX: Int
@@ -202,14 +203,14 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
      * sheetwidth and sheetheight.
      */
     private fun calculateSize() {
-        sheetwidth = 0
-        sheetheight = 0
+        sheetWidth = 0
+        sheetHeight = 0
         for (staff in staffs!!) {
-            sheetwidth = Math.max(sheetwidth, staff.width)
-            sheetheight += staff.height
+            sheetWidth = Math.max(sheetWidth, staff.width)
+            sheetHeight += staff.height
         }
-        sheetwidth += 2
-        sheetheight += LeftMargin
+        sheetWidth += 2
+        sheetHeight += LeftMargin
     }
 
     /* Adjust the zoom level so that the sheet music page (PageWidth)
@@ -220,11 +221,11 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         val specwidth = MeasureSpec.getSize(widthspec)
         val specheight = MeasureSpec.getSize(heightspec)
         if (specwidth == 0 && specheight == 0) {
-            setMeasuredDimension(screenwidth, screenheight)
+            setMeasuredDimension(screenWidth, screenHeight)
         } else if (specwidth == 0) {
-            setMeasuredDimension(screenwidth, specheight)
+            setMeasuredDimension(screenWidth, specheight)
         } else if (specheight == 0) {
-            setMeasuredDimension(specwidth, screenheight)
+            setMeasuredDimension(specwidth, screenHeight)
         } else {
             setMeasuredDimension(specwidth, specheight)
         }
@@ -234,8 +235,8 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
      * and create the bufferCanvas.  Otherwise, do nothing.
      */
     override fun onSizeChanged(newwidth: Int, newheight: Int, oldwidth: Int, oldheight: Int) {
-        viewwidth = newwidth
-        viewheight = newheight
+        viewWidth = newwidth
+        viewHeight = newheight
         if (::_bufferCanvas.isInitialized) {
             draw()
             return
@@ -647,12 +648,12 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
     fun createBufferCanvas() {
         bufferBitmap?.recycle()
         bufferBitmap = if (scrollVert) {
-            Bitmap.createBitmap(viewwidth,
-                    (viewheight) * 2,
+            Bitmap.createBitmap(viewWidth,
+                    (viewHeight) * 2,
                     Bitmap.Config.ARGB_8888)
         } else {
-            Bitmap.createBitmap(viewwidth * 2,
-                    (viewheight) * 2,
+            Bitmap.createBitmap(viewWidth * 2,
+                    (viewHeight) * 2,
                     Bitmap.Config.ARGB_8888)
         }
         _bufferCanvas = Canvas(bufferBitmap!!)
@@ -682,6 +683,9 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         }
         // We want (scrollX - bufferX, scrollY - bufferY)
 // to be (0,0) on the canvas
+        //Log.e("DEBUG", "Z: " + zoom)
+        //Log.e("DEBUG", "SCW: " + screenWidth + " SHW: " + sheetWidth + " VW: " + viewWidth)
+        //Log.e("DEBUG", "SX: " + scrollX + " SY: " + scrollY)
         canvas.translate(-(scrollX - bufferX).toFloat(), -(scrollY - bufferY).toFloat())
         canvas.drawBitmap(bufferBitmap!!, 0f, 0f, paint)
         canvas.translate(scrollX - bufferX.toFloat(), scrollY - bufferY.toFloat())
@@ -738,16 +742,40 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         bufferCanvas.translate(bufferX.toFloat(), bufferY.toFloat())
     }
 
-    /** Write the MIDI filename at the top of the page  */
-    private fun DrawTitle(canvas: Canvas) {
-        val leftmargin = 20
-        val topmargin = 20
-        var title = filename
-        title = title!!.replace(".mid", "").replace("_", " ")
-        canvas.translate(leftmargin.toFloat(), topmargin.toFloat())
-        canvas.drawText(title, 0f, 0f, paint!!)
-        canvas.translate(-leftmargin.toFloat(), -topmargin.toFloat())
+
+    fun calculatePages(): Int {
+        if (viewWidth == 0) return 0
+
+        val realWidth = sheetWidth * zoom
+        val realViewWidth = viewWidth
+        val pages = realWidth / realViewWidth
+        return pages.toInt() + 1
     }
+
+    fun getCurrentPage(): Int {
+        if (viewWidth == 0) return 0
+        return scrollX / viewWidth + 1
+    }
+
+    fun toNextPage() {
+        val next = getCurrentPage() + 1
+        if (next > calculatePages()) return
+        toPage(next)
+    }
+
+    fun toPrevPage() {
+        val prev = getCurrentPage() - 1
+        if (prev == 0) return
+        toPage(prev)
+    }
+
+    private fun toPage(page: Int) {
+        if (viewWidth == 0) return
+        scrollX = viewWidth * (page - 1)
+
+        draw()
+    }
+
 
     /**
      * Return the number of pages needed to print this sheet music.
@@ -781,91 +809,6 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
             }
         }
         return num
-    }
-
-    /** Draw the given page of the sheet music.
-     * Page numbers start from 1.
-     * A staff should fit within a single page, not be split across two pages.
-     * If the sheet music has exactly 2 tracks, then two staffs should
-     * fit within a single page, and not be split across two pages.
-     */
-    fun DrawPage(canvas: Canvas, pagenumber: Int) {
-        val leftmargin = 20
-        val topmargin = 20
-        //int rightmargin = 20;
-//int bottommargin = 20;
-//float scale = 1.0f;
-        val clip = Rect(0, 0, PageWidth + 40, PageHeight + 40)
-        paint!!.isAntiAlias = true
-        paint!!.style = Paint.Style.FILL
-        paint!!.color = Color.WHITE
-        canvas.drawRect(clip.left.toFloat(), clip.top.toFloat(), clip.right.toFloat(), clip.bottom.toFloat(), paint!!)
-        paint!!.style = Paint.Style.STROKE
-        paint!!.color = Color.BLACK
-        var ypos = TitleHeight
-        var pagenum = 1
-        var staffnum = 0
-        if (numtracks == 2 && staffs!!.size % 2 == 0) { /* Skip the staffs until we reach the given page number */
-            while (staffnum + 1 < staffs!!.size && pagenum < pagenumber) {
-                val heights = staffs!![staffnum].height +
-                        staffs!![staffnum + 1].height
-                if (ypos + heights >= PageHeight) {
-                    pagenum++
-                    ypos = 0
-                } else {
-                    ypos += heights
-                    staffnum += 2
-                }
-            }
-            /* Print the staffs until the height reaches PageHeight */ypos = if (pagenum == 1) {
-                DrawTitle(canvas)
-                TitleHeight
-            } else {
-                0
-            }
-            while (staffnum + 1 < staffs!!.size) {
-                val heights = staffs!![staffnum].height +
-                        staffs!![staffnum + 1].height
-                if (ypos + heights >= PageHeight) break
-                canvas.translate(leftmargin.toFloat(), topmargin + ypos.toFloat())
-                staffs!![staffnum].Draw(canvas, clip, paint!!)
-                canvas.translate(-leftmargin.toFloat(), -(topmargin + ypos).toFloat())
-                ypos += staffs!![staffnum].height
-                canvas.translate(leftmargin.toFloat(), topmargin + ypos.toFloat())
-                staffs!![staffnum + 1].Draw(canvas, clip, paint!!)
-                canvas.translate(-leftmargin.toFloat(), -(topmargin + ypos).toFloat())
-                ypos += staffs!![staffnum + 1].height
-                staffnum += 2
-            }
-        } else { /* Skip the staffs until we reach the given page number */
-            while (staffnum < staffs!!.size && pagenum < pagenumber) {
-                if (ypos + staffs!![staffnum].height >= PageHeight) {
-                    pagenum++
-                    ypos = 0
-                } else {
-                    ypos += staffs!![staffnum].height
-                    staffnum++
-                }
-            }
-            /* Print the staffs until the height reaches viewPageHeight */ypos = if (pagenum == 1) {
-                DrawTitle(canvas)
-                TitleHeight
-            } else {
-                0
-            }
-            while (staffnum < staffs!!.size) {
-                if (ypos + staffs!![staffnum].height >= PageHeight) break
-                canvas.translate(leftmargin.toFloat(), topmargin + ypos.toFloat())
-                staffs!![staffnum].Draw(canvas, clip, paint!!)
-                canvas.translate(-leftmargin.toFloat(), -(topmargin + ypos).toFloat())
-                ypos += staffs!![staffnum].height
-                staffnum++
-            }
-        }
-        /* Draw the page number */canvas.drawText("" + pagenumber,
-                PageWidth - leftmargin.toFloat(),
-                topmargin + PageHeight - 12.toFloat(),
-                paint!!)
     }
 
     /** Shade all the chords played at the given pulse time.
@@ -952,8 +895,8 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
             }
             scrollY += scrollDist
         } else {
-            val x_view = scrollX + viewwidth * 40 / 100
-            val xmax = scrollX + viewwidth * 65 / 100
+            val x_view = scrollX + viewWidth * 40 / 100
+            val xmax = scrollX + viewWidth * 65 / 100
             var scrollDist = x_shade - x_view
             if (scrollGradually) {
                 if (x_shade > xmax) scrollDist = (x_shade - x_view) / 3 else if (x_shade > x_view) scrollDist = (x_shade - x_view) / 6
@@ -996,19 +939,19 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
      * the bounds of the sheet music.
      */
     private fun checkScrollBounds() { // Get the width/height of the scrollable area
-        val scrollwidth = (sheetwidth * zoom).toInt()
-        val scrollheight = (sheetheight * zoom).toInt()
+        val scrollwidth = (sheetWidth * zoom).toInt()
+        val scrollheight = (sheetHeight * zoom).toInt()
         if (scrollX < 0) {
             scrollX = 0
         }
-        if (scrollX > scrollwidth - viewwidth / 2) {
-            scrollX = scrollwidth - viewwidth / 2
+        if (scrollX > scrollwidth - viewWidth / 2) {
+            scrollX = scrollwidth - viewWidth / 2
         }
         if (scrollY < 0) {
             scrollY = 0
         }
-        if (scrollY > scrollheight - viewheight / 2) {
-            scrollY = scrollheight - viewheight / 2
+        if (scrollY > scrollheight - viewHeight / 2) {
+            scrollY = scrollheight - viewHeight / 2
         }
     }
 
@@ -1286,8 +1229,8 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         bufferX = bufferY
         val activity = context as Activity
         @Suppress("DEPRECATION")
-        screenwidth = activity.windowManager.defaultDisplay.width
+        screenWidth = activity.windowManager.defaultDisplay.width
         @Suppress("DEPRECATION")
-        screenheight = activity.windowManager.defaultDisplay.height
+        screenHeight = activity.windowManager.defaultDisplay.height
     }
 }

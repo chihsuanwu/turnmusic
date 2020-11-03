@@ -15,10 +15,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
-import com.example.turnmusic_2.library.MidiOptions
-import com.example.turnmusic_2.library.SheetMusic
+import com.example.turnmusic_2.library.*
 import com.midisheetmusic.*
 import com.example.turnmusic_2.library.SheetMusic.Companion.textColor
+import com.example.turnmusic_2.library.sheets.*
 import java.util.*
 
 /** @class ChordSymbol

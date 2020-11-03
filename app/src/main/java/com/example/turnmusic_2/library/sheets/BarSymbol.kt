@@ -14,6 +14,7 @@ package com.midisheetmusic.sheets
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.example.turnmusic_2.library.SheetMusic
+import com.example.turnmusic_2.library.sheets.MusicSymbol
 
 /** @class BarSymbol
  * The BarSymbol represents the vertical bars which delimit measures.

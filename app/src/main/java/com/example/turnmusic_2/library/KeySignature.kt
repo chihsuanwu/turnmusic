@@ -11,10 +11,11 @@
  */
 package com.midisheetmusic
 
-import com.midisheetmusic.sheets.Accidental
+import com.example.turnmusic_2.library.NoteScale
+import com.example.turnmusic_2.library.sheets.Accidental
 import com.midisheetmusic.sheets.AccidentalSymbol
-import com.midisheetmusic.sheets.Clef
-import com.midisheetmusic.sheets.WhiteNote
+import com.example.turnmusic_2.library.sheets.Clef
+import com.example.turnmusic_2.library.sheets.WhiteNote
 import java.util.*
 
 /** @class KeySignature

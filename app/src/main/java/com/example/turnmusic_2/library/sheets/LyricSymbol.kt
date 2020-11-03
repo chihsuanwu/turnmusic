@@ -9,7 +9,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  */
-package com.midisheetmusic.sheets
+package com.example.turnmusic_2.library.sheets
 
 /** @class LyricSymbol
  * A lyric contains the lyric to display, the start time the lyric occurs at,

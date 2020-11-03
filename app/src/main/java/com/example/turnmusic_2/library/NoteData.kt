@@ -11,8 +11,9 @@
  */
 package com.midisheetmusic
 
-import com.midisheetmusic.sheets.Accidental
-import com.midisheetmusic.sheets.WhiteNote
+import com.example.turnmusic_2.library.NoteDuration
+import com.example.turnmusic_2.library.sheets.Accidental
+import com.example.turnmusic_2.library.sheets.WhiteNote
 
 /** @class NoteData
  * Contains fields for displaying a single note in a chord.

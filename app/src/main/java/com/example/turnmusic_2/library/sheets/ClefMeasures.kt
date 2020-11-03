@@ -9,9 +9,9 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  */
-package com.midisheetmusic.sheets
+package com.example.turnmusic_2.library.sheets
 
-import com.midisheetmusic.MidiNote
+import com.example.turnmusic_2.library.MidiNote
 import java.util.*
 
 /** @class ClefMeasures

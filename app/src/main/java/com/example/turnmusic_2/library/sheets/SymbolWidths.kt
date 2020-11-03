@@ -11,6 +11,8 @@
  */
 package com.midisheetmusic.sheets
 
+import com.example.turnmusic_2.library.sheets.LyricSymbol
+import com.example.turnmusic_2.library.sheets.MusicSymbol
 import java.util.*
 
 /** @class SymbolWidths

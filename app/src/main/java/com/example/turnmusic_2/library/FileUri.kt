@@ -13,7 +13,6 @@ package com.example.turnmusic_2.library
 
 import android.app.Activity
 import android.net.Uri
-import com.midisheetmusic.MidiFileException
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.FileInputStream

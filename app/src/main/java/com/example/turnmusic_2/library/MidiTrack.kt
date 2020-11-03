@@ -11,6 +11,8 @@
  */
 package com.midisheetmusic
 
+import com.example.turnmusic_2.library.MidiEvent
+import com.example.turnmusic_2.library.MidiNote
 import java.util.*
 
 /** @class MidiTrack

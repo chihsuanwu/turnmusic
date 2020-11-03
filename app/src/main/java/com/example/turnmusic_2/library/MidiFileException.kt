@@ -9,7 +9,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  */
-package com.midisheetmusic
+package com.example.turnmusic_2.library
 
 /** @class MidiFileException
  * A MidiFileException is thrown when an error occurs

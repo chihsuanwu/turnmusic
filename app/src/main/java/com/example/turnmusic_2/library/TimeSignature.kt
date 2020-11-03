@@ -11,6 +11,8 @@
  */
 package com.midisheetmusic
 
+import com.example.turnmusic_2.library.MidiFileException
+import com.example.turnmusic_2.library.NoteDuration
 import java.io.Serializable
 
 /** @class TimeSignature

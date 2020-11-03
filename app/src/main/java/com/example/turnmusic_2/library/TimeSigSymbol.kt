@@ -14,7 +14,7 @@ package com.example.turnmusic_2.library
 import android.content.Context
 import android.graphics.*
 import com.example.turnmusic_2.R
-import com.midisheetmusic.sheets.MusicSymbol
+import com.example.turnmusic_2.library.sheets.MusicSymbol
 
 /** @class TimeSigSymbol
  * A TimeSigSymbol represents the time signature at the beginning
