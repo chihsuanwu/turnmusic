@@ -164,6 +164,11 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
             mainKey = KeySignature(NoteScale.values().first { it.value == options.key })
         }
         numtracks = tracks.size
+
+        if (numtracks > 1) { // ################TEMP
+            numtracks = 1
+        }
+
         val lastStart = file.EndTime() + options.shifttime
         /* Create all the music symbols (notes, rests, vertical bars, and
          * clef changes).  The symbols variable contains a list of music
@@ -747,14 +752,19 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         if (viewWidth == 0) return 0
 
         val realWidth = sheetWidth * zoom
-        val realViewWidth = viewWidth
-        val pages = realWidth / realViewWidth
+        val pages = realWidth / (viewWidth * OFFSET)
         return pages.toInt() + 1
     }
 
+    val OFFSET = 0.76
+
     fun getCurrentPage(): Int {
         if (viewWidth == 0) return 0
-        return scrollX / viewWidth + 1
+        Log.e("DEBUG", "scrollx = " + scrollX)
+        Log.e("DEBUG", "viewWidth = " + viewWidth)
+        Log.e("DEBUG", "result = " + scrollX / (viewWidth * OFFSET))
+
+        return ((scrollX / (viewWidth * OFFSET)) + 0.01 + 1).toInt()
     }
 
     fun toNextPage() {
@@ -771,9 +781,16 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
 
     private fun toPage(page: Int) {
         if (viewWidth == 0) return
-        scrollX = viewWidth * (page - 1)
-
+        Log.e("DEBUG", "scrollx = " + scrollX)
+        Log.e("DEBUG", "page = " + page)
+        scrollX = ((viewWidth * OFFSET) * (page - 1)).toInt()
+        Log.e("DEBUG", "scrollx = " + scrollX)
         draw()
+    }
+
+    fun shouldTurnPage(shadeX: Int): Boolean {
+        Log.e("DEBUG", ""+shadeX + " - " + scrollX)
+        return ((shadeX - scrollX) / (viewWidth * OFFSET)) > 1.08
     }
 
 
@@ -817,9 +834,9 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
      * If scrollGradually is true, scroll gradually (smooth scrolling)
      * to the shaded notes.
      */
-    fun ShadeNotes(currentPulseTime: Int, prevPulseTime: Int, scrollType: Int) {
+    fun ShadeNotes(currentPulseTime: Int, prevPulseTime: Int, scrollType: Int): Int {
         if (!surfaceReady || staffs == null) {
-            return
+            return 0
         }
         /* If the scroll position is not in the bufferCanvas,
          * we need to redraw the sheet music into the bufferCanvas
@@ -868,19 +885,21 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
          * we have to call this method again.
          */
         if (scrollX < bufferX || scrollY < bufferY) {
-            ShadeNotes(currentPulseTime, prevPulseTime, scrollType)
-            return
+
+            return ShadeNotes(currentPulseTime, prevPulseTime, scrollType)
         }
         /* Draw the buffer canvas to the real canvas.
          * Translate canvas such that (scrollX,scrollY) within the
          * bufferCanvas maps to (0,0) on the real canvas.
          */
         val holder = holder
-        val canvas = holder.lockCanvas() ?: return
+        val canvas = holder.lockCanvas() ?: return 0
         canvas.translate(-(scrollX - bufferX).toFloat(), -(scrollY - bufferY).toFloat())
         canvas.drawBitmap(bufferBitmap!!, 0f, 0f, paint)
         canvas.translate(scrollX - bufferX.toFloat(), scrollY - bufferY.toFloat())
         holder.unlockCanvasAndPost(canvas)
+
+        return x_shade
     }
 
     /** Scroll the sheet music so that the shaded notes are visible.
