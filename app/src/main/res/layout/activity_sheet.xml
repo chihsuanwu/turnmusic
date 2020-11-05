@@ -6,17 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".SheetActivity">
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="title"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/fl_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toTopOf="@+id/imageButton6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <ImageButton
+        android:id="@+id/btn_result"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="resultClick"
+        app:layout_constraintEnd_toEndOf="@+id/fl_main"
+        app:layout_constraintStart_toStartOf="@+id/fl_main"
+        app:layout_constraintTop_toBottomOf="@+id/tv_page"
+        app:srcCompat="@drawable/stop_btn" />
 
     <TextView
         android:id="@+id/tv_page_back"

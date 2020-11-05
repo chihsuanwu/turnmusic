@@ -23,7 +23,11 @@ class ChooseSongActivity : AppCompatActivity() {
         lv_file.setOnItemClickListener { _, _, position, _ ->
             val intent = Intent(this, SheetActivity::class.java)
             intent.putExtra("fileName", midiFilesList[position])
-            intent.putExtra("title", midiFilesList[position])
+            val str = midiFilesList[position]
+            val from = str.indexOfLast { it == '/' }
+            val to = str.indexOfLast { it == '.' }
+
+            intent.putExtra("title", str.subSequence(from+1, to))
             startActivity(intent)
             finish()
 //            Log.e("DEBUG", midiFilesList[position])

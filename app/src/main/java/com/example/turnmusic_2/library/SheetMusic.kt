@@ -662,7 +662,7 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
                     Bitmap.Config.ARGB_8888)
         }
         _bufferCanvas = Canvas(bufferBitmap!!)
-        drawToBuffer(scrollX, scrollY)
+        drawToBuffer(scrollX, 0)
     }
 
     /** Obtain the drawing canvas and call onDraw()  */
@@ -684,23 +684,23 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
             createBufferCanvas()
         }
         if (!isScrollPositionInBuffer) {
-            drawToBuffer(scrollX, scrollY)
+            drawToBuffer(scrollX, 0)
         }
         // We want (scrollX - bufferX, scrollY - bufferY)
 // to be (0,0) on the canvas
         //Log.e("DEBUG", "Z: " + zoom)
         //Log.e("DEBUG", "SCW: " + screenWidth + " SHW: " + sheetWidth + " VW: " + viewWidth)
         //Log.e("DEBUG", "SX: " + scrollX + " SY: " + scrollY)
-        canvas.translate(-(scrollX - bufferX).toFloat(), -(scrollY - bufferY).toFloat())
+        canvas.translate(-(scrollX - bufferX).toFloat(), -(0 - bufferY).toFloat())
         canvas.drawBitmap(bufferBitmap!!, 0f, 0f, paint)
-        canvas.translate(scrollX - bufferX.toFloat(), scrollY - bufferY.toFloat())
+        canvas.translate(scrollX - bufferX.toFloat(), 0 - bufferY.toFloat())
     }
 
     /** Return true if the scrollX/scrollY is in the bufferBitmap  */
     private val isScrollPositionInBuffer: Boolean
-        get() = !(scrollY < bufferY ||
+        get() = !(0 < bufferY ||
                 scrollX < bufferX ||
-                scrollY > bufferY + bufferBitmap!!.height / 3 ||
+                0 > bufferY + bufferBitmap!!.height / 3 ||
                 scrollX > bufferX + bufferBitmap!!.width / 3)
 
     /** Draw the SheetMusic to the bufferCanvas, with the
@@ -781,7 +781,7 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
 
     private fun toPage(page: Int) {
         if (viewWidth == 0) return
-        Log.e("DEBUG", "scrollx = " + scrollX)
+        Log.e("DEBUG", "scrollx = " + scrollX + " sy= " + scrollY)
         Log.e("DEBUG", "page = " + page)
         scrollX = ((viewWidth * OFFSET) * (page - 1)).toInt()
         Log.e("DEBUG", "scrollx = " + scrollX)
@@ -834,7 +834,7 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
      * If scrollGradually is true, scroll gradually (smooth scrolling)
      * to the shaded notes.
      */
-    fun ShadeNotes(currentPulseTime: Int, prevPulseTime: Int, scrollType: Int): Int {
+    fun ShadeNotes(currentPulseTime: Int, prevPulseTime: Int, scrollType: Int, drawRed: Boolean = false): Int {
         if (!surfaceReady || staffs == null) {
             return 0
         }
@@ -842,7 +842,7 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
          * we need to redraw the sheet music into the bufferCanvas
          */
         if (!isScrollPositionInBuffer) {
-            drawToBuffer(scrollX, scrollY)
+            drawToBuffer(scrollX, 0)
         }
         /* We're going to draw the shaded notes into the bufferCanvas.
          * Translate, so that (bufferX, bufferY) maps to (0,0) on the canvas
@@ -853,11 +853,19 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         var x_shade = 0
         var y_shade = 0
         paint!!.isAntiAlias = true
+
         bufferCanvas.scale(zoom, zoom)
         var ypos = 0
         for (staff in staffs!!) {
             bufferCanvas.translate(0f, ypos.toFloat())
-            x_shade = staff.ShadeNotes(bufferCanvas, paint!!, shade1,
+
+            val color = if (drawRed) {
+                Color.rgb(255, 100, 100)
+            } else {
+                shade1
+            }
+
+            x_shade = staff.ShadeNotes(bufferCanvas, paint!!, color,
                     currentPulseTime, prevPulseTime, x_shade)
             bufferCanvas.translate(0f, -ypos.toFloat())
             ypos += staff.height
@@ -865,6 +873,7 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
                 y_shade += staff.height
             }
         }
+
         bufferCanvas.scale(1.0f / zoom, 1.0f / zoom)
         bufferCanvas.translate(bufferX.toFloat(), bufferY.toFloat())
         /* We have the (x,y) position of the shaded notes.
@@ -884,9 +893,9 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         /* If the new scrollX, scrollY is not in the buffer,
          * we have to call this method again.
          */
-        if (scrollX < bufferX || scrollY < bufferY) {
+        if (scrollX < bufferX || 0 < bufferY) {
 
-            return ShadeNotes(currentPulseTime, prevPulseTime, scrollType)
+            return ShadeNotes(currentPulseTime, prevPulseTime, scrollType, drawRed)
         }
         /* Draw the buffer canvas to the real canvas.
          * Translate canvas such that (scrollX,scrollY) within the
@@ -894,9 +903,9 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
          */
         val holder = holder
         val canvas = holder.lockCanvas() ?: return 0
-        canvas.translate(-(scrollX - bufferX).toFloat(), -(scrollY - bufferY).toFloat())
+        canvas.translate(-(scrollX - bufferX).toFloat(), -(0 - bufferY).toFloat())
         canvas.drawBitmap(bufferBitmap!!, 0f, 0f, paint)
-        canvas.translate(scrollX - bufferX.toFloat(), scrollY - bufferY.toFloat())
+        canvas.translate(scrollX - bufferX.toFloat(), 0 - bufferY.toFloat())
         holder.unlockCanvasAndPost(canvas)
 
         return x_shade
@@ -908,11 +917,11 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
      */
     fun ScrollToShadedNotes(x_shade: Int, y_shade: Int, scrollGradually: Boolean) {
         if (scrollVert) {
-            var scrollDist = (y_shade - scrollY)
+            var scrollDist = (y_shade - 0)
             if (scrollGradually) {
                 if (scrollDist > zoom * StaffHeight * 8) scrollDist = scrollDist / 2 else if (scrollDist > NoteHeight * 4 * zoom) scrollDist = (NoteHeight * 4 * zoom).toInt()
             }
-            scrollY += scrollDist
+            //scrollY += scrollDist
         } else {
             val x_view = scrollX + viewWidth * 40 / 100
             val xmax = scrollX + viewWidth * 65 / 100
@@ -966,12 +975,12 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         if (scrollX > scrollwidth - viewWidth / 2) {
             scrollX = scrollwidth - viewWidth / 2
         }
-        if (scrollY < 0) {
-            scrollY = 0
-        }
-        if (scrollY > scrollheight - viewHeight / 2) {
-            scrollY = scrollheight - viewHeight / 2
-        }
+        //if (scrollY < 0) {
+        //    scrollY = 0
+        //}
+        //if (scrollY > scrollheight - viewHeight / 2) {
+        //    scrollY = scrollheight - viewHeight / 2
+        //}
     }
 
     /** Handle touch/motion events to implement scrolling the sheet music.  */
@@ -993,7 +1002,7 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         scrollX += deltaX
         // Only scroll vertically in vertical mode
         if (scrollVert) {
-            scrollY += deltaY
+            //scrollY += deltaY
         }
         checkScrollBounds()
         draw()
@@ -1242,8 +1251,8 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
     init {
         val holder = holder
         holder.addCallback(this)
-        scrollY = 0
-        scrollX = scrollY
+        //scrollY = 0
+        scrollX = 0
         bufferY = scrollX
         bufferX = bufferY
         val activity = context as Activity

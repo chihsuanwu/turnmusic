@@ -9,10 +9,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Turnmusic_2">
-        <activity android:name=".ChooseSongActivity"/>
+        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".ChooseSongActivity" />
         <activity android:name=".SheetActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".LaunchActivity">

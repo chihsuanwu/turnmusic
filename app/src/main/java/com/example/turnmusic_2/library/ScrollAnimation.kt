@@ -125,14 +125,14 @@ class ScrollAnimation(
                 if (!inMotion) return false
                 currentTime = AnimationUtils.currentAnimationTimeMillis()
                 velocityX = (prevMoveX - event.x) * 1000.0f / (currentTime - prevMoveTime)
-                velocityY = (prevMoveY - event.y) * 1000.0f / (currentTime - prevMoveTime)
+                //velocityY = (prevMoveY - event.y) * 1000.0f / (currentTime - prevMoveTime)
                 deltaX = moveX - event.x
-                deltaY = moveY - event.y
+                //deltaY = moveY - event.y
                 prevMoveX = moveX
-                prevMoveY = moveY
+                //prevMoveY = moveY
                 prevMoveTime = moveTime
                 moveX = event.x
-                moveY = event.y
+                //moveY = event.y
                 moveTime = currentTime
                 // If this is a tap, do nothing.
                 if (currentTime - downTime < 500 && Math.abs(moveX - downX) <= 20 && Math.abs(moveY - downY) <= 20) {
@@ -141,11 +141,12 @@ class ScrollAnimation(
                 if (scrollVert) {
                     listener.scrollUpdate(0, deltaY.toInt())
                 } else {
-                    if (Math.abs(deltaY) > Math.abs(deltaX) || Math.abs(deltaY) > 4) {
-                        listener.scrollUpdate(deltaX.toInt(), deltaY.toInt())
-                    } else {
-                        listener.scrollUpdate(deltaX.toInt(), 0)
-                    }
+//                    if (Math.abs(deltaY) > Math.abs(deltaX) || Math.abs(deltaY) > 4) {
+//                        listener.scrollUpdate(deltaX.toInt(), deltaY.toInt())
+//                    } else {
+//                        listener.scrollUpdate(deltaX.toInt(), 0)
+//                    }
+                    listener.scrollUpdate(deltaX.toInt(), 0)
                 }
                 true
             }

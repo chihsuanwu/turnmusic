@@ -24,7 +24,7 @@ private const val RECORDER_SAMPLE_RATE = 44100
 private const val RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO
 private const val RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT
 private const val MIN_FREQUENCY = 20
-private const val MAX_FREQUENCY = 8000
+private const val MAX_FREQUENCY = 4000
 private const val BUFFER_SIZE = 4096
 private const val FFT_SIZE = 8192
 private const val FFT_SIZE_LN = 13
@@ -44,9 +44,18 @@ class SheetActivity : AppCompatActivity() {
 
     lateinit var track: MidiTrack
 
+    private var title = ""
+    private var fileName = ""
+
     private var currentIndex = 0
     private var currentShadeNote = -1
     private var currentShadeX = 0
+
+    //private var up = true
+    private var debounceCounter = 0
+
+    //private var finishFlag = false
+    private var resultList: MutableList<Boolean> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,9 +83,13 @@ class SheetActivity : AppCompatActivity() {
 
     private fun createSheet() {
         sheet = SheetMusic(this)
-        val title = intent.getStringExtra("title")
-        val fileName = intent.getStringExtra("fileName")
-        val file = File(fileName!!)
+
+        title = intent.getStringExtra("title")!!
+        fileName = intent.getStringExtra("fileName")!!
+
+        tv_title.text = title
+
+        val file = File(fileName)
         val midiFile = MidiFile(file.readBytes(), title)
 
         TimeSigSymbol.LoadImages(this) // TEMP FIX
@@ -106,6 +119,20 @@ class SheetActivity : AppCompatActivity() {
         stopRecording()
     }
 
+    fun resultClick(view: View) {
+        val intent = Intent(this@SheetActivity,ResultActivity::class.java)
+        intent.putExtra("result", resultList.toBooleanArray())
+        intent.putExtra("title", title)
+        intent.putExtra("fileName", fileName)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopRecording()
+    }
+
     fun testClick(view: View) {
         currentIndex++
         val prevShadeNote = currentShadeNote
@@ -125,7 +152,7 @@ class SheetActivity : AppCompatActivity() {
                 RECORDER_SAMPLE_RATE, RECORDER_CHANNELS,
                 RECORDER_AUDIO_ENCODING, BUFFER_SIZE
         ).apply {
-            startRecording()
+            this.startRecording()
         }
 
         isRecording = true
@@ -134,15 +161,21 @@ class SheetActivity : AppCompatActivity() {
     }
 
     private fun stopRecording() {
-        recorder?.apply {
-            stop()
-            release()
-            isRecording = false
-            recordingThread?.join()
-            recordingThread = null
-            recorder = null
+        try {
+            recorder?.apply {
+                this.stop()
+                this.release()
+                isRecording = false
+                recordingThread?.join()
+                recordingThread = null
+                recorder = null
+            }
+        } catch (e: Exception) {
+
         }
-        recordingThread?.run()
+
+        //recordingThread?.run()
+
     }
 
     private fun audioAnalyze() {
@@ -151,14 +184,13 @@ class SheetActivity : AppCompatActivity() {
         while (isRecording) {
             val length = recorder?.read(data, 0, BUFFER_SIZE)
             if (length == BUFFER_SIZE) {
-                getFFT(prevData + data)
+                getAndAnalyze(prevData + data)
                 data.copyInto(prevData)
             }
         }
     }
 
-    private fun getFFT(input: ShortArray) {
-
+    private fun getFFT(input: ShortArray): DoubleArray {
         val real = DoubleArray(FFT_SIZE)
         val y = DoubleArray(FFT_SIZE)
         for (i in 0 until FFT_SIZE) {
@@ -166,6 +198,12 @@ class SheetActivity : AppCompatActivity() {
             y[i] = 0.0
         }
         fft.fft(real, y)
+        return real
+    }
+
+    private fun getAndAnalyze(input: ShortArray) {
+
+        val real = getFFT(input)
 
         var maxVal = 0.0
         var maxIndex = 0
@@ -183,12 +221,28 @@ class SheetActivity : AppCompatActivity() {
 
         val pitchNoStr = getPitchStr(pitchNo)
 
-        val result = compareWithSheet(pitchNo)
+        val GATE = 25
+
+        var result = false
+        if (maxVal > GATE) {
+            if (debounceCounter == 0) {
+                val cmpResult = compareWithSheet(pitchNo)
+                if (cmpResult) {
+                    result = true
+                }
+            }
+            debounceCounter = 2
+        } else {
+            if (debounceCounter > 0) {
+                debounceCounter--
+            }
+        }
 
 
         handler.post { Runnable {
             //getPitch(hz)
-            if (maxVal > 50) {
+            if (maxVal > GATE) {
+                Log.e("DEBUG", "$hz Hz, AMP: $maxVal, $pitchNoStr CMP: $result")
                 tv_info.text = "$hz Hz, $pitchNoStr"
             } else {
                 tv_info.text = "$hz Hz, -------"
@@ -200,22 +254,65 @@ class SheetActivity : AppCompatActivity() {
 
             tv_info2.text = "AMP: $maxVal"
 
-            tv_info3.text = "Waiting for ${getPitchStr(track.notes[currentIndex].number)}"
+            tv_info3.text = if (currentIndex == track.notes.size) {
+
+                btn_result.visibility = View.VISIBLE
+
+                val len = resultList.size
+                val correct = resultList.count { it }
+                Log.e("DEBUG", "$correct / $len")
+                "$correct / $len"
+
+
+            } else {
+                "Waiting for ${getPitchStr(track.notes[currentIndex].number - 24)}"
+            }
         }.run() }
+
+        if (currentIndex == track.notes.size) {
+            stopRecording()
+        }
     }
 
     private fun compareWithSheet(pitchNo: Int): Boolean {
         val waitingFor = track.notes[currentIndex]
-        if ((pitchNo + 24) == waitingFor.number) {
+        return if (((pitchNo + 24) == waitingFor.number) ||
+                ((pitchNo + 12) == waitingFor.number) ||
+                (pitchNo == waitingFor.number)) {
+            if (resultList.size == currentIndex) {
+                resultList.add(true)
+            }
             currentIndex++
             val prevShadeNote = currentShadeNote
             currentShadeNote = track.notes[currentIndex - 1].startTime
-            sheet.ShadeNotes(currentShadeNote, prevShadeNote, 3)
+            currentShadeX = sheet.ShadeNotes(currentShadeNote, prevShadeNote, 3)
 
-            return true
+            if (sheet.shouldTurnPage(currentShadeX)) {
+                sheet.toNextPage()
+                currentShadeX = sheet.ShadeNotes(currentShadeNote, 0, 3)
+            }
+            true
+        } else {
+            if (resultList.size == currentIndex) {
+                resultList.add(false)
+            }
+            currentIndex++
+            val prevShadeNote = currentShadeNote
+            currentShadeNote = track.notes[currentIndex - 1].startTime
+            currentShadeX = sheet.ShadeNotes(currentShadeNote, prevShadeNote, 3, true)
+
+            if (sheet.shouldTurnPage(currentShadeX)) {
+                sheet.toNextPage()
+                currentShadeX = sheet.ShadeNotes(currentShadeNote, 0, 3, true)
+            }
+
+            currentShadeNote = prevShadeNote
+            currentIndex--
+            false
         }
-        return false
+
     }
+
 
     private val pitchName = arrayOf("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B")
     private val pitchNameSimple = arrayOf("1", "1#", "2", "2#", "3", "4", "4#", "5", "5#", "6", "7#", "7")
@@ -230,6 +327,6 @@ class SheetActivity : AppCompatActivity() {
         val pitchStrSimple = pitchNameSimple[pitchNo % 12]
         val offset = pitchNo / 12 - 3
 
-        return "pitch: $pitchStr  $pitchNo"
+        return "pitch: $pitchStr  ${pitchNo+24}"
     }
 }
