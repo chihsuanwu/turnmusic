@@ -15,12 +15,12 @@ class MenuActivity : AppCompatActivity() {
 
     fun input_click(view: View) {
         startActivity(Intent(this@MenuActivity, ChooseSongActivity::class.java))
-        finish()
+
     }
 
     fun history_click(view: View) {
         startActivity(Intent(this@MenuActivity, HistoryActivity::class.java))
-        finish()
+
     }
     fun exit_click(view: View) {
         finish()

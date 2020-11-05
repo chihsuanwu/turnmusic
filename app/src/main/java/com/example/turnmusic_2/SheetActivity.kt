@@ -123,7 +123,7 @@ class SheetActivity : AppCompatActivity() {
     }
 
     fun resultClick(view: View) {
-        val intent = Intent(this@SheetActivity,ResultActivity::class.java)
+        val intent = Intent(this@SheetActivity,HistoryActivity::class.java)
         intent.putExtra("result", resultList.toBooleanArray())
         intent.putExtra("title", title)
         intent.putExtra("fileName", fileName)
