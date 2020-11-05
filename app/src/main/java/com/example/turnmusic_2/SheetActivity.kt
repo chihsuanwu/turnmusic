@@ -147,6 +147,7 @@ class SheetActivity : AppCompatActivity() {
             sheet.toNextPage()
             currentShadeX = sheet.ShadeNotes(currentShadeNote, 0, 3)
         }
+        recreate()
     }
 
     private fun startRecording() {
@@ -350,4 +351,5 @@ class SheetActivity : AppCompatActivity() {
 
         return "pitch: $pitchStr  ${pitchNo+24}"
     }
+
 }

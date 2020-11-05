@@ -19,7 +19,13 @@ class MenuActivity : AppCompatActivity() {
     }
 
     fun history_click(view: View) {
-        startActivity(Intent(this@MenuActivity, HistoryActivity::class.java))
+        //startActivity(Intent(this@MenuActivity, HistoryActivity::class.java))
+        val intent = Intent(this@MenuActivity,HistoryActivity::class.java)
+        intent.putExtra("result", booleanArrayOf(true,false,true,false))
+        intent.putExtra("title", "test_title")
+        intent.putExtra("fileName", "test_filename")
+        startActivity(intent)
+        finish()
 
     }
     fun exit_click(view: View) {

@@ -4,38 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E645546E"
     tools:context=".SheetActivity">
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="538dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="28dp"
         android:text="title"
-        android:textSize="36sp"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/fl_main"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="1175dp"
+        android:layout_height="183dp"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="64dp"
         android:layout_marginBottom="72dp"
+        android:background="#3C3F41"
         app:layout_constraintBottom_toTopOf="@+id/imageButton6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintVertical_bias="0.014" />
 
     <ImageButton
         android:id="@+id/btn_result"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#00FFFFFF"
         android:onClick="resultClick"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/fl_main"
         app:layout_constraintStart_toStartOf="@+id/fl_main"
         app:layout_constraintTop_toBottomOf="@+id/tv_page"
@@ -54,8 +61,8 @@
         android:id="@+id/tv_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:text="1/1"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/fl_main"
         app:layout_constraintStart_toStartOf="@+id/fl_main"
         app:layout_constraintTop_toBottomOf="@+id/fl_main" />
@@ -105,42 +112,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#00FFFFFF"
+        android:onClick="testClick"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.757"
+        app:layout_constraintHorizontal_bias="0.716"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/stop_btn"
-        android:onClick="testClick"/>
+        app:layout_constraintVertical_bias="0.884"
+        app:srcCompat="@drawable/stop_btn" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#00FFFFFF"
+        android:onClick="stopRecordClick"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintHorizontal_bias="0.847"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/pluse_btn"
-        android:onClick="stopRecordClick"/>
+        app:layout_constraintVertical_bias="0.884"
+        app:srcCompat="@drawable/pluse_btn" />
 
     <ImageButton
         android:id="@+id/imageButton5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#00FFFFFF"
+        android:onClick="recordClick"
+        android:scaleX="2"
+        android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.983"
+        app:layout_constraintHorizontal_bias="0.966"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/play_btn"
-        android:onClick="recordClick"/>
+        app:layout_constraintVertical_bias="0.883"
+        app:srcCompat="@drawable/play_btn" />
 
     <ImageButton
         android:id="@+id/imageButton6"
@@ -148,15 +161,13 @@
         android:layout_height="91dp"
         android:backgroundTint="#00FFFFFF"
 
-        android:scaleX="0.6"
-        android:scaleY="0.6"
+        android:onClick="menuClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.909"
         app:srcCompat="@drawable/history_menu"
-        tools:ignore="OnClick"
-        android:onClick="menuClick"/>
+        tools:ignore="OnClick" />
 </androidx.constraintlayout.widget.ConstraintLayout>

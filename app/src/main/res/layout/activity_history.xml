@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#45546E"
+    android:foregroundTint="#FFFFFF"
     tools:context=".HistoryActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.009"
+        app:layout_constraintVertical_bias="0.047"
         app:srcCompat="@drawable/history_title" />
 
     <ImageButton
@@ -23,48 +26,207 @@
         android:layout_width="240dp"
         android:layout_height="114dp"
         android:backgroundTint="#00FFFFFF"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.859"
+        app:layout_constraintEnd_toStartOf="@+id/exit_result_imageButton2"
+        app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/history_agin" />
+        app:layout_constraintVertical_bias="0.956"
+        app:srcCompat="@drawable/history_agin"
+        android:onClick="again_result_click"
+        tools:ignore="OnClick"/>
 
     <ImageButton
         android:id="@+id/exit_result_imageButton2"
         android:layout_width="176dp"
         android:layout_height="112dp"
         android:backgroundTint="#00FFFFFF"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
+        android:onClick="exit_result_click"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.967"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.943"
         app:srcCompat="@drawable/history_exit"
-        tools:ignore="OnClick"
-        android:onClick="exit_result_click"/>
+        tools:ignore="OnClick" />
 
     <ImageButton
         android:id="@+id/menu_imageButton3"
         android:layout_width="164dp"
         android:layout_height="107dp"
         android:backgroundTint="#00FFFFFF"
-        android:scaleX="0.6"
-        android:scaleY="0.6"
+        android:onClick="meun_result_click"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/exit_result_imageButton2"
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toEndOf="@+id/again_imageButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.956"
+        app:srcCompat="@drawable/history_menu"
+        tools:ignore="OnClick" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="1174dp"
+        android:layout_height="204dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/history_menu"
-        tools:ignore="OnClick"
-        android:onClick="meun_result_click"
-        />
+        app:layout_constraintVertical_bias="0.248">
+
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleX="2.2"
+        android:scaleY="2.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton7"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.523"
+        app:srcCompat="@drawable/left_btn" />
+
+    <ImageButton
+        android:id="@+id/imageButton7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.524"
+        app:srcCompat="@drawable/right_btn" />
+
+    <ImageView
+        android:id="@+id/accuracy_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.8"
+        android:scaleY="1.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.282"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.666"
+        app:srcCompat="@drawable/accuracy" />
+
+    <ImageView
+        android:id="@+id/coorect_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.3"
+        android:scaleY="1.3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.664"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.564"
+        app:srcCompat="@drawable/corret_times" />
+
+    <ImageView
+        android:id="@+id/fault_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.3"
+        android:scaleY="1.3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.664"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.729"
+        app:srcCompat="@drawable/fault_times" />
+
+    <TextView
+        android:id="@+id/accuracy_textView"
+        android:layout_width="183dp"
+        android:layout_height="79dp"
+        android:text="50.0%"
+        android:textAlignment="center"
+        android:textColor="#F48C8C"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/accuracy_view"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/accuracy_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.667" />
+
+    <TextView
+        android:id="@+id/coorecttimes_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#D9ED20"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toEndOf="@+id/coorect_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.564" />
+
+    <TextView
+        android:id="@+id/faulttimes_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#FF9B9B"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toEndOf="@+id/fault_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.733" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.004"
+        app:layout_constraintStart_toEndOf="@+id/coorecttimes_textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.575"
+        app:srcCompat="@drawable/times_times" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintStart_toEndOf="@+id/faulttimes_textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.736"
+        app:srcCompat="@drawable/times_times" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
