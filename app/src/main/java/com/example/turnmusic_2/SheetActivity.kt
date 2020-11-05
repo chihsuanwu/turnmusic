@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import com.example.turnmusic_2.library.MidiNote
 import com.midisheetmusic.MidiFile
 import com.example.turnmusic_2.library.SheetMusic
 import com.example.turnmusic_2.library.TimeSigSymbol
@@ -53,6 +54,8 @@ class SheetActivity : AppCompatActivity() {
 
     //private var up = true
     private var debounceCounter = 0
+
+    private var lastSameCounter = 2
 
     //private var finishFlag = false
     private var resultList: MutableList<Boolean> = mutableListOf()
@@ -223,15 +226,17 @@ class SheetActivity : AppCompatActivity() {
 
         val GATE = 25
 
-        var result = false
+        //var result = false
         if (maxVal > GATE) {
             if (debounceCounter == 0) {
                 val cmpResult = compareWithSheet(pitchNo)
                 if (cmpResult) {
-                    result = true
+                    debounceCounter = 2
+                    //result = true
                 }
+            } else {
+                debounceCounter = 1
             }
-            debounceCounter = 2
         } else {
             if (debounceCounter > 0) {
                 debounceCounter--
@@ -242,15 +247,15 @@ class SheetActivity : AppCompatActivity() {
         handler.post { Runnable {
             //getPitch(hz)
             if (maxVal > GATE) {
-                Log.e("DEBUG", "$hz Hz, AMP: $maxVal, $pitchNoStr CMP: $result")
+                Log.e("DEBUG", "$hz Hz, AMP: $maxVal, $pitchNoStr")
                 tv_info.text = "$hz Hz, $pitchNoStr"
             } else {
                 tv_info.text = "$hz Hz, -------"
             }
 
-            if (result) {
-                sheet.draw()
-            }
+            //if (result) {
+            //    sheet.draw()
+            //}
 
             tv_info2.text = "AMP: $maxVal"
 
@@ -274,11 +279,15 @@ class SheetActivity : AppCompatActivity() {
         }
     }
 
+    private fun cmp(pitchNo: Int, note: MidiNote): Boolean {
+        return ((pitchNo + 24) == note.number) ||
+                ((pitchNo + 12) == note.number) ||
+                (pitchNo == note.number)
+    }
+
     private fun compareWithSheet(pitchNo: Int): Boolean {
         val waitingFor = track.notes[currentIndex]
-        return if (((pitchNo + 24) == waitingFor.number) ||
-                ((pitchNo + 12) == waitingFor.number) ||
-                (pitchNo == waitingFor.number)) {
+        if (cmp(pitchNo, waitingFor)) {
             if (resultList.size == currentIndex) {
                 resultList.add(true)
             }
@@ -291,8 +300,18 @@ class SheetActivity : AppCompatActivity() {
                 sheet.toNextPage()
                 currentShadeX = sheet.ShadeNotes(currentShadeNote, 0, 3)
             }
-            true
+
+            lastSameCounter = 2
+
+            return true
         } else {
+            if (currentIndex > 0 && lastSameCounter > 0) {
+                if (cmp(pitchNo, track.notes[currentIndex - 1])) {
+                    lastSameCounter--
+                    return false
+                }
+            }
+
             if (resultList.size == currentIndex) {
                 resultList.add(false)
             }
@@ -308,7 +327,9 @@ class SheetActivity : AppCompatActivity() {
 
             currentShadeNote = prevShadeNote
             currentIndex--
-            false
+
+
+            return false
         }
 
     }
