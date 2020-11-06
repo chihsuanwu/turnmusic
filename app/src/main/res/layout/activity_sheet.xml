@@ -12,10 +12,9 @@
         android:layout_width="538dp"
         android:layout_height="84dp"
         android:layout_marginTop="28dp"
-
         android:text="title"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:textColor="#EFECEC"
         android:textSize="60sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
+
         android:id="@+id/fl_main"
         android:layout_width="1160dp"
         android:layout_height="160dp"
@@ -31,20 +31,23 @@
         android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toTopOf="@+id/imageButton6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        app:layout_constraintVertical_bias="0.014" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.798"
+        app:layout_constraintVertical_bias="0.915"
         app:srcCompat="@drawable/detail" />
 
     <ImageButton
@@ -56,9 +59,13 @@
         android:scaleX="2"
         android:scaleY="2"
         android:visibility="gone"
-        app:srcCompat="@drawable/go_result"
-        tools:layout_editor_absoluteX="947dp"
-        tools:layout_editor_absoluteY="451dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.71"
+        app:srcCompat="@drawable/go_result" />
 
     <TextView
         android:id="@+id/tv_page_back"
@@ -74,13 +81,13 @@
         android:id="@+id/tv_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="92dp"
         android:text="1/1"
         android:textColor="#CAC7C7"
         android:textSize="48sp"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="@+id/fl_main"
-        app:layout_constraintHorizontal_bias="0.017"
+        app:layout_constraintHorizontal_bias="0.022"
         app:layout_constraintStart_toStartOf="@+id/fl_main"
         app:layout_constraintTop_toBottomOf="@+id/fl_main" />
 
@@ -98,42 +105,41 @@
         android:id="@+id/tv_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="info"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="76dp"
+        android:text="300"
+        android:textAlignment="textStart"
         android:textColor="#CAC7C7"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.612" />
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/tv_info2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="info"
-        android:textColor="#CAC7C7"
+        android:layout_marginStart="236dp"
 
+        android:layout_marginTop="164dp"
+        android:text="40"
+        android:textAlignment="textStart"
+        android:textColor="#CAC7C7"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_info3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_info"
-        app:layout_constraintVertical_bias="0.489" />
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/tv_info3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
-        android:text="info"
 
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="240dp"
+        android:text="D"
         android:textColor="#CAC7C7"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="662dp" />
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -145,10 +151,10 @@
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.715"
+        app:layout_constraintHorizontal_bias="0.772"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.936"
+        app:layout_constraintVertical_bias="0.945"
         app:srcCompat="@drawable/stop_btn" />
 
     <ImageButton
@@ -161,7 +167,7 @@
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
+        app:layout_constraintHorizontal_bias="0.876"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.936"
@@ -177,7 +183,7 @@
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.962"
+        app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.932"
@@ -198,5 +204,17 @@
         app:layout_constraintVertical_bias="0.943"
         app:srcCompat="@drawable/history_menu"
         tools:ignore="OnClick" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="82dp"
+        android:layout_height="84dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="420dp"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
+        app:layout_constraintStart_toEndOf="@+id/tv_page"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/page" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

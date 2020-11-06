@@ -19,6 +19,7 @@ import com.midisheetmusic.MidiTrack
 import com.nclab.audiorecognition.FFT
 import kotlinx.android.synthetic.main.activity_sheet.*
 import java.io.File
+import java.math.BigDecimal
 import kotlin.math.log2
 import kotlin.math.round
 
@@ -32,6 +33,8 @@ private const val FFT_SIZE = 8192
 private const val FFT_SIZE_LN = 13
 
 class SheetActivity : AppCompatActivity() {
+
+
 
     lateinit var sheet: SheetMusic
 
@@ -62,6 +65,8 @@ class SheetActivity : AppCompatActivity() {
     private var resultList: MutableList<Boolean> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sheet)
 
@@ -262,11 +267,9 @@ class SheetActivity : AppCompatActivity() {
                 tv_info.text = "$hz Hz, -------"
             }
 
-            //if (result) {
-            //    sheet.draw()
-            //}
+            val dig = BigDecimal(maxVal)
 
-            tv_info2.text = "AMP: $maxVal"
+            tv_info2.text = "${dig.setScale(2 ,BigDecimal.ROUND_HALF_DOWN).toDouble()}"
 
             tv_info3.text = if (currentIndex == track.notes.size) {
 
@@ -279,7 +282,7 @@ class SheetActivity : AppCompatActivity() {
 
 
             } else {
-                "Waiting for ${getPitchStr(track.notes[currentIndex].number - 24)}"
+                getPitchStr(track.notes[currentIndex].number - 24)
             }
         }.run() }
 
@@ -365,7 +368,7 @@ class SheetActivity : AppCompatActivity() {
         val pitchStrSimple = pitchNameSimple[pitchNo % 12]
         val offset = pitchNo / 12 - 3
 
-        return "pitch: $pitchStr  ${pitchNo+24}"
+        return pitchStr
     }
 
 }
