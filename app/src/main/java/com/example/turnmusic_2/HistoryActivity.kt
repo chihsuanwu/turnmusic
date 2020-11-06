@@ -84,7 +84,7 @@ class HistoryActivity : AppCompatActivity() {
         for (i in 0 until len) {
             if (resultArray[i]) continue
             val note = track.notes[i]
-            sheet.ShadeNotes(note.startTime, 0, 3, true)
+            sheet.ShadeNotes(note.startTime, -1, 3, true)
             wrongTime.add(note.startTime)
         }
     }
