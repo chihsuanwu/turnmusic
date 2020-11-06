@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
 import com.example.turnmusic_2.library.MidiNote
 import com.midisheetmusic.MidiFile
 import com.example.turnmusic_2.library.SheetMusic
@@ -104,6 +105,13 @@ class SheetActivity : AppCompatActivity() {
         sheet.draw()
 
         track = midiFile.tracks!![0]
+
+        Handler().postDelayed({
+            val totalPage = sheet.calculatePages()
+            val currentPage = sheet.getCurrentPage()
+            tv_page.text = "$currentPage / $totalPage"
+        },400)
+
     }
 
     fun menuClick(view: View) {
@@ -300,6 +308,14 @@ class SheetActivity : AppCompatActivity() {
             if (sheet.shouldTurnPage(currentShadeX)) {
                 sheet.toNextPage()
                 currentShadeX = sheet.ShadeNotes(currentShadeNote, 0, 3)
+
+                handler.post { Runnable {
+                        val totalPage = sheet.calculatePages()
+                        val currentPage = sheet.getCurrentPage()
+                        tv_page.text = "$currentPage / $totalPage"
+                    }.run()
+                }
+
             }
 
             lastSameCounter = 2
