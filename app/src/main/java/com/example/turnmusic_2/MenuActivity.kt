@@ -21,9 +21,9 @@ class MenuActivity : AppCompatActivity() {
     fun history_click(view: View) {
         //startActivity(Intent(this@MenuActivity, HistoryActivity::class.java))
         val intent = Intent(this@MenuActivity,HistoryActivity::class.java)
-        intent.putExtra("result", booleanArrayOf(true,false,true,false))
-        intent.putExtra("title", "test_title")
-        intent.putExtra("fileName", "test_filename")
+        intent.putExtra("result", booleanArrayOf(true,false,true,false,true,true,true,true,false))
+        intent.putExtra("title", "123")
+        intent.putExtra("fileName", "/storage/emulated/0/Download/123.mid")
         startActivity(intent)
         finish()
 

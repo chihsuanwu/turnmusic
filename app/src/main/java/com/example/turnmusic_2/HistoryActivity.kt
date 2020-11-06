@@ -25,12 +25,9 @@ class HistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
-
         resultArray = intent.getBooleanArrayExtra("result")!!
-
         //val title = intent.getStringExtra("title")!!
         //val fileName = intent.getStringExtra("fileName")!!
-
         val correct = resultArray.count { it }
         val fault =  resultArray.count() - correct
         val percentage = correct*100/resultArray.size
@@ -60,7 +57,8 @@ class HistoryActivity : AppCompatActivity() {
 
         val file = File(fileName)
         val midiFile = MidiFile(file.readBytes(), title)
-
+        textView.text=fileName
+        textView2.text= resultArray.toString()
         sheet.init(midiFile)
         fl_main.addView(sheet)
         fl_main.requestLayout()

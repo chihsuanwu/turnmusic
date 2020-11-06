@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="220dp"
         android:layout_marginTop="76dp"
-        android:text="300"
+        android:text="0"
         android:textAlignment="textStart"
         android:textColor="#CAC7C7"
         android:textSize="30sp"
@@ -121,7 +121,7 @@
         android:layout_marginStart="236dp"
 
         android:layout_marginTop="164dp"
-        android:text="40"
+        android:text="0"
         android:textAlignment="textStart"
         android:textColor="#CAC7C7"
         android:textSize="30sp"
@@ -135,7 +135,7 @@
 
         android:layout_marginStart="240dp"
         android:layout_marginTop="240dp"
-        android:text="D"
+        android:text="C"
         android:textColor="#CAC7C7"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
