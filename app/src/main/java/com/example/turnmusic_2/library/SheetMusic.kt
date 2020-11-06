@@ -694,6 +694,9 @@ class SheetMusic(context: Context) : SurfaceView(context), SurfaceHolder.Callbac
         canvas.translate(-(scrollX - bufferX).toFloat(), -(0 - bufferY).toFloat())
         canvas.drawBitmap(bufferBitmap!!, 0f, 0f, paint)
         canvas.translate(scrollX - bufferX.toFloat(), 0 - bufferY.toFloat())
+
+
+
     }
 
     /** Return true if the scrollX/scrollY is in the bufferBitmap  */

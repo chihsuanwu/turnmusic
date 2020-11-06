@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#45546E"
+    android:background="#E645546E"
     tools:context=".ChooseSongActivity">
 
     <ListView
         android:id="@+id/lv_file"
-        android:background="#576A84"
+        android:background="#DADDE2"
         android:layout_margin="64dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
