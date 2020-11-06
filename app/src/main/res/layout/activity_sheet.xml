@@ -36,25 +36,37 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
         app:layout_constraintVertical_bias="0.014" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.798"
+        app:srcCompat="@drawable/detail" />
+
     <ImageButton
         android:id="@+id/btn_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#00FFFFFF"
         android:onClick="resultClick"
+        android:scaleX="2"
+        android:scaleY="2"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/fl_main"
-        app:layout_constraintStart_toStartOf="@+id/fl_main"
-        app:layout_constraintTop_toBottomOf="@+id/tv_page"
-        app:srcCompat="@drawable/stop_btn" />
+        app:srcCompat="@drawable/go_result"
+        tools:layout_editor_absoluteX="947dp"
+        tools:layout_editor_absoluteY="451dp" />
 
     <TextView
         android:id="@+id/tv_page_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" B "
-        android:visibility="gone"
         android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/tv_page"
         app:layout_constraintTop_toBottomOf="@+id/fl_main" />
 
@@ -62,21 +74,23 @@
         android:id="@+id/tv_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:text="1/1"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="24dp"
+        android:textColor="#CAC7C7"
         android:textSize="48sp"
+        android:typeface="normal"
         app:layout_constraintEnd_toEndOf="@+id/fl_main"
+        app:layout_constraintHorizontal_bias="0.017"
         app:layout_constraintStart_toStartOf="@+id/fl_main"
         app:layout_constraintTop_toBottomOf="@+id/fl_main" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_page_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" N "
         android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/tv_page"
         app:layout_constraintTop_toBottomOf="@+id/fl_main" />
 
@@ -85,31 +99,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="info"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imageButton6"
-        app:layout_constraintTop_toTopOf="@+id/imageButton6" />
+        android:textColor="#CAC7C7"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.612" />
 
     <TextView
         android:id="@+id/tv_info2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="info"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/tv_info3"
+        android:textColor="#CAC7C7"
 
-        app:layout_constraintStart_toEndOf="@+id/imageButton6"
-        app:layout_constraintTop_toBottomOf="@+id/tv_info" />
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_info3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_info"
+        app:layout_constraintVertical_bias="0.489" />
 
     <TextView
         android:id="@+id/tv_info3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="164dp"
         android:text="info"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintStart_toEndOf="@+id/imageButton6"
-        app:layout_constraintTop_toBottomOf="@+id/tv_info2" />
+        android:textColor="#CAC7C7"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="662dp" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -121,10 +145,10 @@
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.716"
+        app:layout_constraintHorizontal_bias="0.715"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884"
+        app:layout_constraintVertical_bias="0.936"
         app:srcCompat="@drawable/stop_btn" />
 
     <ImageButton
@@ -137,10 +161,10 @@
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.847"
+        app:layout_constraintHorizontal_bias="0.844"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884"
+        app:layout_constraintVertical_bias="0.936"
         app:srcCompat="@drawable/pluse_btn" />
 
     <ImageButton
@@ -153,10 +177,10 @@
         android:scaleY="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.966"
+        app:layout_constraintHorizontal_bias="0.962"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883"
+        app:layout_constraintVertical_bias="0.932"
         app:srcCompat="@drawable/play_btn" />
 
     <ImageButton
@@ -168,10 +192,11 @@
         android:onClick="menuClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.909"
+        app:layout_constraintVertical_bias="0.943"
         app:srcCompat="@drawable/history_menu"
         tools:ignore="OnClick" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
